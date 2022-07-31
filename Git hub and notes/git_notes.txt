@@ -1,0 +1,17 @@
+git clone https://github.com/Ikabysh001/Test-1.git
+git status
+git add <filename>
+git commit -m "message"
+
+git pushclear
+
+pwd - what is used to see which folder you are in
+ls - is to see your contents of current folders
+Cd ... - changes your directory (e.g cd Downloads)
+Cd - goes to user folder
+Cd .. - one step back
+
+Mkdir  - creates a folder
+Touch -creats a file
+Cat - prints out the contents of a file 
+Nano -terminal app which allows you to write files
