@@ -7,6 +7,11 @@ from telegram.ext.filters import Filters
 
 import random,requests
 from bs4 import BeautifulSoup
+import speech_recognition as sr
+from pydub import AudioSegment
+from gtts import gTTS
+import os
+        
 
 
 def get_weather(city_name):
@@ -105,12 +110,29 @@ def convert_ogg2wav(ofn):
     x.export(wfn, format='wav')
 
 
-def get_voice(update: Update, context: CallbackContext):
-    new_file = context.bot.get_file(update.message.voice.file_id)
+def get_voice (update: Update, context: CallbackContext):
+    new_file = context.bot.get_file(update. message. voice. file_id)
     new_file.download(f"voice_note.ogg")
-    convert_ogg2wav(voice_note.ogg)
+    convert_ogg2wav("voice_note.ogg")
 
+    recogniser = sr. Recognizer()
+    sound = sr. AudioFile('voice_note.wav')
+    with sound as source:
+        audio = recogniser .record(source)
+    text = recogniser.recognize_google(audio)
+    update. message.reply_text ("in the voice message you have said: \n"+text)
 
+def convert_to_voice(text):
+    myobj = gTTS(text=text, lang='en', slow=False)
+    myobj.save("ivan.wav")
+    os.system("mpg321 ivan.wav")
+
+    reply = update.message.text
+    convert_to_voice(reply[15:])
+    update.message.reply_voice(open("ivan.wav", 'rb'))
+
+updater.dispatcher.add_handler(CommandHandler('text_to_voice', text_to_voice))
+updater.dispatcher.add_handler(MessageHandler(Filters.voice , get_voice))
 updater.dispatcher.add_handler(MessageHandler(Filters.voice , get_voice))
 updater.dispatcher.add_handler(CommandHandler('trend', trend))
 updater.dispatcher.add_handler(CommandHandler('btc', btc))
