@@ -32,7 +32,7 @@ def get_weather(city_name):
 
 api_key = "5592873776:AAGeLg53cvjYcEbYUkiOz16rXsb5h6kFPGc"
 updater = Updater(api_key,use_context=True)
-slink = ["https://vm.tiktok.com/ZMNUF73F5/?k=1","https://vm.tiktok.com/ZMNUFGLQm/?k=1","https://vm.tiktok.com/ZMNUYjG3K/?k=1",
+link = ["https://vm.tiktok.com/ZMNUF73F5/?k=1","https://vm.tiktok.com/ZMNUFGLQm/?k=1","https://vm.tiktok.com/ZMNUYjG3K/?k=1",
         "https://vm.tiktok.com/ZMNUFTmf3/?k=1","https://vm.tiktok.com/ZMNUYNpho/?k=1","https://vm.tiktok.com/ZMNUYe3MS/?k=1",
         "https://vm.tiktok.com/ZMNUYkfdB/?k=1","https://vm.tiktok.com/ZMNUYfbYv/?k=1","https://vm.tiktok.com/ZMNUY4H3L/?k=1",
        "https://vm.tiktok.com/ZMNUY4H3L/?k=1","https://vm.tiktok.com/ZMNUYAcRf/?k=1"]
@@ -57,15 +57,16 @@ def help(update: Update, context:CallbackContext):
     update.message.reply_text("use:\n\
 /introduce to read about me, also you can use: \
 \n /tiktok to watch a short video which is supposedly funny ontop of that us \n \
-/meme for a meme futhermore, with a little web scraping i \
+futhermore, with a little web scraping i \
 learned to get \n/weather (and the na,e of the  town or city after \
 it in the same line) \n /btc is to see the current price of bitcoin \
 /n /trend this is to post a video whic is trending but only use once \
  /n i mean it, if you do this bot wil get banned for spamming by tiktok")
 
 def meme (update: Update,context:CallbackContext):
-    update.message.reply_photo(photo=open("images/"+random.choice(memes), 'rb'))
-    print("images/"+random.choice(memes))
+    image_folder=r"images"
+    update.message.reply_photo(photo=open(image_folder+random.choice(memes), 'rb'))
+    
 
 def weather(update: Update, context:CallbackContext):
         reply = update.message.text
@@ -130,6 +131,12 @@ def convert_to_voice(text):
     reply = update.message.text
     convert_to_voice(reply[15:])
     update.message.reply_voice(open("ivan.wav", 'rb'))
+
+def text_to_voice(update: Update, context:CallbackContext):
+    reply = Update.message.text
+    convert_to_voice(reply[15:])
+    update.message.reply_voice(open("ivan.wav", 'rb'))
+
 
 updater.dispatcher.add_handler(CommandHandler('text_to_voice', text_to_voice))
 updater.dispatcher.add_handler(MessageHandler(Filters.voice , get_voice))
