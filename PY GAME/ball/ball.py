@@ -2,6 +2,7 @@ import pygame,random
 
 pygame.init()
 
+
 fps = 100
 clock = pygame.time.Clock()
 window_width=500
@@ -17,14 +18,16 @@ class Ball(pygame.sprite.Sprite):
 		self.image.fill((0,0,0))
 		pygame.draw.circle(self.image,(random.randint(0,255),random.randint(0,255),random.randint(0,255),random.randint(0,255)),(10,10),10,0)
 		self.rect=self.image.get_rect()
-		self.rect.x, self.rect.y=250,250
-		self.gravity = 0.7
+		self.rect.x=pygame.mouse.get_pos()[0]
+		self.rect.y=pygame.mouse.get_pos()[1]
+		self.gravity = -5
 		self.x_speed = random.randint(-5,5)
 		self.y_speed = random.randint(-5,5)
 
 	def update(self):
 		self.rect.x=self.rect.x+self.x_speed
-		self.rect.y=self.rect.y+self.y_speed
+		self.rect.y=self.rect.y+self.gravity
+		self.gravity=self.gravity+5
 
 ball_gp = pygame.sprite.Group()
 ball = Ball()
